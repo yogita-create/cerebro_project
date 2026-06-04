@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Page.css";
 
-const API = "https://cerebro-project-02f7.onrender.com/api";
+const API = "https://cerebro-project-02f7.onrender.com";
 
 const Page = () => {
   const [documents, setDocuments] = useState([]);
