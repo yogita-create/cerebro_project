@@ -14,7 +14,7 @@ const signToken = (userId) =>
     expiresIn: "7d",
   });
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+const FRONTEND_URL = process.env.FRONTEND_URL || "https://cerebro-project-eggni8dej-yogita-sawants-projects-5192e91a.vercel.app";
 
 /* ─────────────────────────────────
    PASSPORT — Google Strategy
@@ -24,7 +24,7 @@ passport.use(
     {
       clientID:     process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL:  `${process.env.BACKEND_URL || "http://localhost:5000"}/api/auth/google/callback`,
+      callbackURL:  `${process.env.BACKEND_URL || "https://cerebro-project-02f7.onrender.com"}/api/auth/google/callback`,
     },
     async (_accessToken, _refreshToken, profile, done) => {
       try {
