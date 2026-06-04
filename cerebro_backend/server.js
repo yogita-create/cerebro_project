@@ -12,7 +12,7 @@ const app = express();
 
 /* MIDDLEWARE */
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: process.env.FRONTEND_URL || "https://cerebro-project-eggni8dej-yogita-sawants-projects-5192e91a.vercel.app",
   credentials: true,
 }));
 
@@ -26,7 +26,6 @@ app.use("/api/chat", require("./routes/chatRoutes")); // if exists
 
 /* TEST ROUTE */
 app.get("/", (req, res) => {
-  res.send("Backend Running 🚀");
   res.send("Backend Running ");
 });
 
