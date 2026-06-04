@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Auth.css";
 
-const API = "http://localhost:5000/api";
+const API = "https://cerebro-project-02f7.onrender.com";
 
 /* ---------------- ICONS ---------------- */
 const GoogleIcon = () => (
