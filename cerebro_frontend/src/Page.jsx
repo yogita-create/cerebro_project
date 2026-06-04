@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Page.css";
 
-const API = "http://localhost:5000/api";
+const API = "https://cerebro-project-02f7.onrender.com/api";
 
 const Page = () => {
   const [documents, setDocuments] = useState([]);
@@ -67,8 +67,14 @@ const Page = () => {
 
   const loadDocuments = async () => {
     try {
-      const res = await fetch(`${API}/documents`);
-      const data = await res.json();
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API}/documents`, {
+        headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await res.json();
 
       if (data.success) {
         setDocuments(data.documents || []);
@@ -97,8 +103,12 @@ const Page = () => {
 
   const deleteDocument = async (id) => {
     try {
+      const token = localStorage.getItem("token");
       await fetch(`${API}/documents/${id}`, {
         method: "DELETE",
+         headers: {
+        Authorization: `Bearer ${token}`,
+      },
       });
 
       await loadDocuments();
@@ -118,7 +128,14 @@ const Page = () => {
 
   const loadSessions = async (docId) => {
     try {
-      const res = await fetch(`${API}/chat/sessions/${docId}`);
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API}/chat/sessions/${docId}`, 
+        {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
 
       if (data.success) {
@@ -131,7 +148,13 @@ const Page = () => {
 
   const loadHistory = async (docId, sessId) => {
     try {
-      const res = await fetch(`${API}/chat/session/${docId}/${sessId}`);
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API}/chat/session/${docId}/${sessId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
 
       if (data.success) {
@@ -156,10 +179,13 @@ const Page = () => {
   };
 const deleteSession = async (id) => {
   try {
+    const token = localStorage.getItem("token");
+
     const res = await fetch(`${API}/chat/session/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
 
@@ -194,13 +220,16 @@ const deleteSession = async (id) => {
 
   const uploadPDF = async (file) => {
     if (!file) return;
-
+    const token = localStorage.getItem("token");
     const formData = new FormData();
     formData.append("file", file);
 
     try {
       const res = await fetch(`${API}/documents/upload`, {
         method: "POST",
+         headers: {
+        Authorization: `Bearer ${token}`,
+      },
         body: formData,
       });
 
@@ -227,10 +256,13 @@ const askQuestion = async (text, replaceIndex = null) => {
   setLoading(true);
 
   try {
+    const token = localStorage.getItem("token"); 
+
     const res = await fetch(`${API}/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify({
         question: text,

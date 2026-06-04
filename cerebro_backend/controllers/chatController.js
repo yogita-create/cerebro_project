@@ -251,3 +251,10 @@ const controller = new ChatController();
 
 module.exports = {
   chat: controller.chat.bind(controller),
+  getChatHistory:
+    controller.getChatHistory.bind(controller),
+  getAllSessions:
+    controller.getAllSessions.bind(controller),
+  deleteSession:
+    controller.deleteSession.bind(controller),
+};

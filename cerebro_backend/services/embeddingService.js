@@ -39,8 +39,12 @@ class EmbeddingService {
       return this.normalize(vector);
 
     } catch (error) {
-      console.error("Embedding Error:", error.message);
-      throw new Error("Embedding failed");
+  console.error("FULL HF ERROR:");
+  console.error(error);
+  console.error("MESSAGE:", error?.message);
+  console.error("RESPONSE:", error?.response?.data);
+
+  throw error;
     }
   }
 

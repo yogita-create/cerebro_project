@@ -42,6 +42,11 @@ const documentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  userId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "User",
+  required: true
+},
   totalChunks: {
     type: Number,
     default: 0
