@@ -5,9 +5,9 @@ const pdfService = require("../services/pdfService");
 const chunkingService = require("../services/chunkingService");
 const embeddingService = require("../services/embeddingService");
 
-// ===============================
-// UPLOAD DOCUMENT
-// ===============================
+/* ===============================
+   UPLOAD DOCUMENT
+=============================== */
 const uploadDocument = async (req, res) => {
   try {
     if (!req.file) {
@@ -24,87 +24,33 @@ const uploadDocument = async (req, res) => {
 
     let text = "";
 
-    // ===============================
-    // PDF
-    // ===============================
     if (req.file.mimetype === "application/pdf") {
-      const result =
-        await pdfService.extractText(fileBuffer);
-
+      const result = await pdfService.extractText(fileBuffer);
       text = result.text;
-    }
-
-    // ===============================
-    // TXT
-    // ===============================
-    else if (
-      req.file.mimetype === "text/plain"
-    ) {
+    } else if (req.file.mimetype === "text/plain") {
       text = fileBuffer.toString("utf-8");
+    } else {
+      throw new Error("Unsupported file type");
     }
 
-    else {
-      throw new Error(
-        "Unsupported file type"
-      );
-    }
-
-    console.log(
-      "Extracted length:",
-      text.length
-    );
-
-    // ===============================
-    // CHUNKING
-    // ===============================
-    const rawChunks =
-      await chunkingService.chunkText(text);
-
-    console.log(
-      "Chunks:",
-      rawChunks.length
-    );
+    const rawChunks = await chunkingService.chunkText(text);
 
     const chunks = [];
 
-    for (
-      let i = 0;
-      i < rawChunks.length;
-      i++
-    ) {
-      let chunkText =
-        rawChunks[i]?.text;
+    for (let i = 0; i < rawChunks.length; i++) {
+      let chunkText = rawChunks[i]?.text;
 
-      if (
-        typeof chunkText !== "string"
-      ) {
-        chunkText = String(
-          chunkText
-        );
+      if (typeof chunkText !== "string") {
+        chunkText = String(chunkText);
       }
 
-      chunkText =
-        chunkText.trim();
+      chunkText = chunkText.trim();
 
-      if (
-        !chunkText ||
-        chunkText.length < 30
-      ) {
-        continue;
-      }
+      if (!chunkText || chunkText.length < 30) continue;
 
-      const embedding =
-        await embeddingService.embedText(
-          chunkText,
-          false
-        );
+      const embedding = await embeddingService.embedText(chunkText, false);
 
-      if (
-        !embedding ||
-        embedding.length === 0
-      ) {
-        continue;
-      }
+      if (!embedding || embedding.length === 0) continue;
 
       chunks.push({
         chunkId: i.toString(),
@@ -114,188 +60,139 @@ const uploadDocument = async (req, res) => {
       });
     }
 
-    if (
-      chunks.length === 0
-    ) {
-      throw new Error(
-        "No valid chunks created"
-      );
+    if (chunks.length === 0) {
+      throw new Error("No valid chunks created");
     }
 
-    // ===============================
-    // SAVE
-    // ===============================
-    const document =
-      new Document({
-        fileName,
-        fileSize:
-          req.file.size,
-        totalChunks:
-          chunks.length,
-        chunks,
-        status:
-          "completed",
-      });
+    // 🔐 IMPORTANT FIX: attach userId
+    const document = new Document({
+      fileName,
+      fileSize: req.file.size,
+      totalChunks: chunks.length,
+      chunks,
+      status: "completed",
+      userId: req.userId,
+    });
 
-    const savedDoc =
-      await document.save();
-
-    console.log(
-      " Saved ID:",
-      savedDoc._id
-    );
+    const savedDoc = await document.save();
 
     res.json({
       success: true,
-      message:
-        "Document uploaded successfully",
+      message: "Document uploaded successfully",
       id: savedDoc._id,
     });
 
   } catch (error) {
-    console.error(
-      "❌ Upload Error:",
-      error.message
-    );
+    console.error("❌ Upload Error:", error.message);
 
     res.status(500).json({
       success: false,
-      error:
-        error.message,
+      error: error.message,
     });
   }
 };
 
-// ===============================
-// LIST DOCUMENTS
-// ===============================
-const listDocuments =
-  async (req, res) => {
-    try {
-      const docs =
-        await Document.find(
-          {},
-          {
-            "chunks.embedding": 0,
-          }
-        );
+/* ===============================
+   LIST DOCUMENTS (FIXED)
+=============================== */
+const listDocuments = async (req, res) => {
+  try {
+    const docs = await Document.find(
+      { userId: req.userId },   // 🔐 FIX
+      { "chunks.embedding": 0 }
+    );
 
-      res.json({
-        success: true,
-        documents: docs,
-      });
+    res.json({
+      success: true,
+      documents: docs,
+    });
 
-    } catch (error) {
-      console.error(
-        "❌ List Error:",
-        error.message
-      );
+  } catch (error) {
+    console.error("❌ List Error:", error.message);
 
-      res.status(500).json({
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+/* ===============================
+   GET SINGLE DOCUMENT (FIXED)
+=============================== */
+const getDocument = async (req, res) => {
+  try {
+    const doc = await Document.findOne({
+      _id: req.params.id,
+      userId: req.userId,   // 🔐 FIX
+    }, {
+      "chunks.embedding": 0,
+    });
+
+    if (!doc) {
+      return res.status(404).json({
         success: false,
-        error:
-          error.message,
+        error: "Document not found",
       });
     }
-  };
 
-// ===============================
-// GET SINGLE DOCUMENT
-// ===============================
-const getDocument =
-  async (req, res) => {
-    try {
-      const doc =
-        await Document.findById(
-          req.params.id,
-          {
-            "chunks.embedding": 0,
-          }
-        );
+    res.json({
+      success: true,
+      document: doc,
+    });
 
-      if (!doc) {
-        return res.status(
-          404
-        ).json({
-          success: false,
-          error:
-            "Document not found",
-        });
-      }
+  } catch (error) {
+    console.error("❌ Get Error:", error.message);
 
-      res.json({
-        success: true,
-        document: doc,
-      });
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
 
-    } catch (error) {
-      console.error(
-        "❌ Get Error:",
-        error.message
-      );
+/* ===============================
+   DELETE DOCUMENT (FIXED)
+=============================== */
+const deleteDocument = async (req, res) => {
+  try {
+    const id = req.params.id;
 
-      res.status(500).json({
+    const deleted = await Document.findOneAndDelete({
+      _id: id,
+      userId: req.userId,   // 🔐 FIX
+    });
+
+    if (!deleted) {
+      return res.status(404).json({
         success: false,
-        error:
-          error.message,
+        error: "Document not found",
       });
     }
-  };
 
-// ===============================
-// DELETE DOCUMENT
-// ===============================
-const deleteDocument =
-  async (req, res) => {
-    try {
-      const { id } =
-        req.params;
+    await ChatHistory.deleteMany({
+      documentId: id,
+      userId: req.userId, // optional safety
+    });
 
-      const deleted =
-        await Document.findByIdAndDelete(
-          id
-        );
+    res.json({
+      success: true,
+      message: "Document deleted successfully",
+    });
 
-      if (!deleted) {
-        return res.status(
-          404
-        ).json({
-          success: false,
-          error:
-            "Document not found",
-        });
-      }
+  } catch (error) {
+    console.error("❌ Delete Error:", error.message);
 
-      // Delete related chats
-      await ChatHistory.deleteMany(
-        {
-          documentId: id,
-        }
-      );
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
 
-      res.json({
-        success: true,
-        message:
-          "Document deleted successfully",
-      });
-
-    } catch (error) {
-      console.error(
-        "❌ Delete Error:",
-        error.message
-      );
-
-      res.status(500).json({
-        success: false,
-        error:
-          error.message,
-      });
-    }
-  };
-
-// ===============================
-// EXPORT
-// ===============================
+/* ===============================
+   EXPORT
+=============================== */
 module.exports = {
   uploadDocument,
   listDocuments,

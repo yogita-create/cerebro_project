@@ -4,19 +4,24 @@ const embeddingService = require("../services/embeddingService");
 const searchService = require("../services/searchService");
 const ChatHistory = require("../models/ChatHistory");
 
-console.log(" CONTROLLER LOADED");
-
 class ChatController {
 
-  // ===============================
-  // CHAT
-  // ===============================
+  /* ===============================
+     CHAT
+  =============================== */
   async chat(req, res) {
     try {
-      console.log(" CHAT FUNCTION HIT");
+      console.log("🔥 CHAT FUNCTION HIT");
 
-      const { question, documentId, sessionId } = req.body;
+      const {
+        question,
+        documentId,
+        sessionId,
+      } = req.body || {};
 
+      /* ===============================
+         VALIDATION
+      =============================== */
       if (!question || !documentId) {
         return res.status(400).json({
           success: false,
@@ -24,39 +29,94 @@ class ChatController {
         });
       }
 
+      /* ===============================
+         USER FROM JWT MIDDLEWARE
+      =============================== */
+      const userId = req.userId;
+
+      if (!userId) {
+        return res.status(401).json({
+          success: false,
+          error: "User not authenticated",
+        });
+      }
+
       const cleanQuestion = question.trim();
 
-      const embedding = await embeddingService.embedText(cleanQuestion, true);
+      console.log("📌 Creating embedding...");
 
-      const chunks = await searchService.searchSimilarChunks(
-        embedding,
-        documentId,
-        7
-      );
+      /* ===============================
+         EMBEDDING
+      =============================== */
+      const embedding =
+        await embeddingService.embedText(
+          cleanQuestion,
+          true
+        );
 
+      console.log("📌 Searching similar chunks...");
+
+      /* ===============================
+         VECTOR SEARCH
+      =============================== */
+      const chunks =
+        await searchService.searchSimilarChunks(
+          embedding,
+          documentId,
+          7
+        );
+
+      console.log("📌 Chunks found:", chunks.length);
+
+      /* ===============================
+         NO RESULT
+      =============================== */
       if (!chunks.length) {
         return res.json({
           success: true,
           answer: "Answer not found in the document",
+          sessionId: sessionId || null,
         });
       }
 
-      const context = chunks.map(c => c.text).join("\n\n");
+      /* ===============================
+         CONTEXT BUILDING
+      =============================== */
+      const context = chunks
+        .map((c) => c.text)
+        .join("\n\n");
 
-      const answer = await llmService.generateAnswer(cleanQuestion, context);
+      console.log("📌 Generating AI answer...");
 
-      const currentSessionId = sessionId || `session_${Date.now()}`;
+      /* ===============================
+         GENERATE ANSWER
+      =============================== */
+      const answer =
+        await llmService.generateAnswer(
+          cleanQuestion,
+          context
+        );
 
-      //  SAVE CHAT
+      const currentSessionId =
+        sessionId || `session_${Date.now()}`;
+
+      /* ===============================
+         SAVE CHAT
+      =============================== */
       const saved = await ChatHistory.create({
-        documentId: new mongoose.Types.ObjectId(documentId),
+        userId,
+        documentId:
+          new mongoose.Types.ObjectId(documentId),
         sessionId: currentSessionId,
         question: cleanQuestion,
         answer,
       });
 
-      console.log("Chat saved:", saved._id);
+      console.log("✅ Chat saved:", saved._id);
 
+      /* ===============================
+         RESPONSE
+      =============================== */
       return res.json({
         success: true,
         answer,
@@ -64,7 +124,9 @@ class ChatController {
       });
 
     } catch (error) {
-      console.error("❌ Chat Error:", error);
+
+      console.error("❌ CHAT ERROR:", error);
+
       return res.status(500).json({
         success: false,
         error: error.message,
@@ -72,15 +134,20 @@ class ChatController {
     }
   }
 
-  // ===============================
-  // GET CHAT HISTORY (PER SESSION)
-  // ===============================
+  /* ===============================
+     GET CHAT HISTORY
+  =============================== */
   async getChatHistory(req, res) {
     try {
-      const { documentId, sessionId } = req.params;
+
+      const {
+        documentId,
+        sessionId,
+      } = req.params;
 
       const chats = await ChatHistory.find({
-        documentId: new mongoose.Types.ObjectId(documentId),
+        documentId:
+          new mongoose.Types.ObjectId(documentId),
         sessionId,
       }).sort({ createdAt: 1 });
 
@@ -90,7 +157,7 @@ class ChatController {
       });
 
     } catch (error) {
-      console.error("❌ History Error:", error);
+
       return res.status(500).json({
         success: false,
         error: error.message,
@@ -98,33 +165,46 @@ class ChatController {
     }
   }
 
-  // ===============================
-  // GET ALL SESSIONS (SIDEBAR)
-  // ===============================
+  /* ===============================
+     GET ALL SESSIONS
+  =============================== */
   async getAllSessions(req, res) {
     try {
+
       const { documentId } = req.params;
 
-      const sessions = await ChatHistory.aggregate([
-        {
-          $match: {
-            documentId: new mongoose.Types.ObjectId(documentId),
+      const sessions =
+        await ChatHistory.aggregate([
+          {
+            $match: {
+              documentId:
+                new mongoose.Types.ObjectId(
+                  documentId
+                ),
+            },
           },
-        },
-        {
-          $sort: { createdAt: 1 }, // important for first question
-        },
-        {
-          $group: {
-            _id: "$sessionId",
-            firstQuestion: { $first: "$question" },
-            createdAt: { $first: "$createdAt" },
+          {
+            $sort: {
+              createdAt: 1,
+            },
           },
-        },
-        {
-          $sort: { createdAt: -1 }, // latest on top
-        },
-      ]);
+          {
+            $group: {
+              _id: "$sessionId",
+              firstQuestion: {
+                $first: "$question",
+              },
+              createdAt: {
+                $first: "$createdAt",
+              },
+            },
+          },
+          {
+            $sort: {
+              createdAt: -1,
+            },
+          },
+        ]);
 
       return res.json({
         success: true,
@@ -132,7 +212,7 @@ class ChatController {
       });
 
     } catch (error) {
-      console.error("❌ Sessions Error:", error);
+
       return res.status(500).json({
         success: false,
         error: error.message,
@@ -140,14 +220,17 @@ class ChatController {
     }
   }
 
-  // ===============================
-  //  DELETE SESSION
-  // ===============================
+  /* ===============================
+     DELETE SESSION
+  =============================== */
   async deleteSession(req, res) {
     try {
+
       const { sessionId } = req.params;
 
-      await ChatHistory.deleteMany({ sessionId });
+      await ChatHistory.deleteMany({
+        sessionId,
+      });
 
       return res.json({
         success: true,
@@ -155,7 +238,7 @@ class ChatController {
       });
 
     } catch (error) {
-      console.error("❌ Delete Error:", error);
+
       return res.status(500).json({
         success: false,
         error: error.message,
@@ -164,12 +247,7 @@ class ChatController {
   }
 }
 
-// EXPORT (VERY IMPORTANT)
 const controller = new ChatController();
 
 module.exports = {
   chat: controller.chat.bind(controller),
-  getChatHistory: controller.getChatHistory.bind(controller),
-  getAllSessions: controller.getAllSessions.bind(controller),
-  deleteSession: controller.deleteSession.bind(controller),
-};

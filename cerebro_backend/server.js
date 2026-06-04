@@ -3,11 +3,12 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const { router: authRouter } = require("./user_authentication");
 
 const app = express();
 
 /* LOAD GOOGLE AUTH */
-require("./user_authentication");
+
 
 /* MIDDLEWARE */
 app.use(cors({
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use(passport.initialize());
 
 /* ROUTES */
-app.use("/api/auth", require("./routes/auth"));
+app.use("/api/auth", authRouter);
 app.use("/api/documents", require("./routes/documentRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes")); // if exists
 

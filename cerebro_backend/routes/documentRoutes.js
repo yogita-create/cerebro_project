@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const documentController = require("../controllers/documentController");
+const protect = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -40,24 +41,28 @@ const upload = multer({
 router.post(
   "/upload",
   upload.single("file"),
+  protect,
   documentController.uploadDocument
 );
 
 // Get all documents
 router.get(
   "/",
+  protect,
   documentController.listDocuments
 );
 
 // Get single document
 router.get(
   "/:id",
+  protect,
   documentController.getDocument
 );
 
 // Delete document
 router.delete(
   "/:id",
+  protect,
   documentController.deleteDocument
 );
 
