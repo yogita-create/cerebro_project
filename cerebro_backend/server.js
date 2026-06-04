@@ -27,6 +27,7 @@ app.use("/api/chat", require("./routes/chatRoutes")); // if exists
 /* TEST ROUTE */
 app.get("/", (req, res) => {
   res.send("Backend Running 🚀");
+  res.send("Backend Running ");
 });
 
 /* DATABASE */

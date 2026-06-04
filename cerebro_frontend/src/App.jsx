@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Auth from "./components/Auth";
 import Page from "./Page";
 
-const API = "http://localhost:5000/api";
+const API = "https://cerebro-project-02f7.onrender.com";
 
 const App = () => {
   const [user, setUser] = useState(null);

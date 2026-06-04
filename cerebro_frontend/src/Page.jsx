@@ -38,30 +38,30 @@ const Page = () => {
 
   /* ---------------- INIT ---------------- */
   useEffect(() => {
-    init();
-    return () => clearTimeout(toastTimer.current);
-  }, []);
+    const init = async () => {
+      const docs = await loadDocuments();
 
-  async function init() {
-    const docs = await loadDocuments();
+      const docId = localStorage.getItem("documentId");
+      const sessId = localStorage.getItem("sessionId");
 
-    const docId = localStorage.getItem("documentId");
-    const sessId = localStorage.getItem("sessionId");
+      if (docId && docs?.length) {
+        const doc = docs.find((d) => d._id === docId);
 
-    if (docId && docs?.length) {
-      const doc = docs.find((d) => d._id === docId);
+        if (doc) {
+          setSelectedDoc(doc);
+          await loadSessions(docId);
 
-      if (doc) {
-        setSelectedDoc(doc);
-        await loadSessions(docId);
-
-        if (sessId) {
-          setSessionId(sessId);
-          await loadHistory(docId, sessId);
+          if (sessId) {
+            setSessionId(sessId);
+            await loadHistory(docId, sessId);
+          }
         }
       }
-    }
-  }
+    };
+
+    init();
+    return () => clearTimeout(toastTimer.current);
+  }, );
 
   /* ---------------- DOCUMENTS ---------------- */
 
