@@ -71,8 +71,8 @@ const Auth = ({ onAuthSuccess }) => {
     try {
       const endpoint =
         mode === "login"
-          ? `${API}/auth/login`
-          : `${API}/auth/register`;
+          ? `${API}/api/auth/login`
+          : `${API}/api/auth/register`;
 
       const payload =
         mode === "login"

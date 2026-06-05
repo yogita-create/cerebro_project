@@ -2,15 +2,15 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const app = express(); // ✅ MUST BE FIRST
+const app = express(); 
 
 const documentRoutes = require('./routes/documentRoutes');
 const chatRoutes = require('./routes/chatRoutes');
-const authRoutes = require('./routes/authRoutes'); // ✅ correct place (recommended)
+const authRoutes = require('./routes/authRoutes'); 
 
 //  CORS FIX
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174", "https://cerebro-project-fbampx412-yogita-sawants-projects-5192e91a.vercel.app/"],
+  origin: [ "https://cerebro-project-fbampx412-yogita-sawants-projects-5192e91a.vercel.app/"],
   methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"],
   credentials: true
@@ -47,7 +47,7 @@ app.get('/health', (req, res) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error('❌ Error:', err.message);
+  console.error(' Error:', err.message);
   res.status(500).json({
     error: err.message || 'Internal Server Error'
   });

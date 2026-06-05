@@ -17,10 +17,10 @@ async function test() {
       answer: "test answer"
     });
 
-    console.log("✅ SAVED:", testDoc);
+    console.log("SAVED:", testDoc);
 
   } catch (err) {
-    console.error("❌ ERROR:", err);
+    console.error("ERROR:", err);
   }
 }
 

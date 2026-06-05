@@ -11,7 +11,7 @@ class ChatController {
   =============================== */
   async chat(req, res) {
     try {
-      console.log("🔥 CHAT FUNCTION HIT");
+      console.log("CHAT FUNCTION HIT");
 
       const {
         question,
@@ -43,7 +43,7 @@ class ChatController {
 
       const cleanQuestion = question.trim();
 
-      console.log("📌 Creating embedding...");
+      console.log(" Creating embedding...");
 
       /* ===============================
          EMBEDDING
@@ -54,7 +54,7 @@ class ChatController {
           true
         );
 
-      console.log("📌 Searching similar chunks...");
+      console.log(" Searching similar chunks...");
 
       /* ===============================
          VECTOR SEARCH
@@ -66,7 +66,7 @@ class ChatController {
           7
         );
 
-      console.log("📌 Chunks found:", chunks.length);
+      console.log(" Chunks found:", chunks.length);
 
       /* ===============================
          NO RESULT
@@ -86,7 +86,7 @@ class ChatController {
         .map((c) => c.text)
         .join("\n\n");
 
-      console.log("📌 Generating AI answer...");
+      console.log(" Generating AI answer...");
 
       /* ===============================
          GENERATE ANSWER
@@ -112,7 +112,7 @@ class ChatController {
         answer,
       });
 
-      console.log("✅ Chat saved:", saved._id);
+      console.log(" Chat saved:", saved._id);
 
       /* ===============================
          RESPONSE
@@ -125,7 +125,7 @@ class ChatController {
 
     } catch (error) {
 
-      console.error("❌ CHAT ERROR:", error);
+      console.error(" CHAT ERROR:", error);
 
       return res.status(500).json({
         success: false,

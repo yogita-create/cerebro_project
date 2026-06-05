@@ -188,7 +188,7 @@ GOOGLE_CLIENT_ID=your_google_client_id
 
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:5173, https://cerebro-project-eggni8dej-yogita-sawants-projects-5192e91a.vercel.app
 ```
 
 ---
@@ -234,13 +234,13 @@ Runs both frontend and backend.
 Frontend:
 
 ```bash
-http://localhost:5173
+http://localhost:5173, https://cerebro-project-eggni8dej-yogita-sawants-projects-5192e91a.vercel.app
 ```
 
 Backend:
 
 ```bash
-http://localhost:5000
+http://localhost:5000, https://cerebro-project-02f7.onrender.com
 ```
 
 ---
@@ -342,7 +342,7 @@ Frontend terminal:
 
 ```bash
 VITE ready
-Local: http://localhost:5173
+Local: http://localhost:5173, https://cerebro-project-eggni8dej-yogita-sawants-projects-5192e91a.vercel.app
 ```
 
 ---

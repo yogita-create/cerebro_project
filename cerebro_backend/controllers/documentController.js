@@ -64,7 +64,7 @@ const uploadDocument = async (req, res) => {
       throw new Error("No valid chunks created");
     }
 
-    // 🔐 IMPORTANT FIX: attach userId
+    //  IMPORTANT FIX: attach userId
     const document = new Document({
       fileName,
       fileSize: req.file.size,
@@ -83,7 +83,7 @@ const uploadDocument = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ Upload Error:", error.message);
+    console.error(" Upload Error:", error.message);
 
     res.status(500).json({
       success: false,
@@ -98,7 +98,7 @@ const uploadDocument = async (req, res) => {
 const listDocuments = async (req, res) => {
   try {
     const docs = await Document.find(
-      { userId: req.userId },   // 🔐 FIX
+      { userId: req.userId },   
       { "chunks.embedding": 0 }
     );
 
@@ -108,7 +108,7 @@ const listDocuments = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ List Error:", error.message);
+    console.error(" List Error:", error.message);
 
     res.status(500).json({
       success: false,
@@ -124,7 +124,7 @@ const getDocument = async (req, res) => {
   try {
     const doc = await Document.findOne({
       _id: req.params.id,
-      userId: req.userId,   // 🔐 FIX
+      userId: req.userId,   
     }, {
       "chunks.embedding": 0,
     });
@@ -142,7 +142,7 @@ const getDocument = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ Get Error:", error.message);
+    console.error(" Get Error:", error.message);
 
     res.status(500).json({
       success: false,
@@ -160,7 +160,7 @@ const deleteDocument = async (req, res) => {
 
     const deleted = await Document.findOneAndDelete({
       _id: id,
-      userId: req.userId,   // 🔐 FIX
+      userId: req.userId,  
     });
 
     if (!deleted) {
@@ -172,7 +172,7 @@ const deleteDocument = async (req, res) => {
 
     await ChatHistory.deleteMany({
       documentId: id,
-      userId: req.userId, // optional safety
+      userId: req.userId, 
     });
 
     res.json({
@@ -181,7 +181,7 @@ const deleteDocument = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ Delete Error:", error.message);
+    console.error("Delete Error:", error.message);
 
     res.status(500).json({
       success: false,

@@ -32,7 +32,7 @@ class SearchService {
       return scoredChunks.slice(0, topK);
 
     } catch (error) {
-      console.error("❌ Search Error:", error.message);
+      console.error("Search Error:", error.message);
       return [];
     }
   }
