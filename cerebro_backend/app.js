@@ -10,7 +10,7 @@ const authRoutes = require('./routes/authRoutes');
 
 //  CORS FIX
 app.use(cors({
-  origin: [ "https://cerebro-project-fbampx412-yogita-sawants-projects-5192e91a.vercel.app/"],
+  origin: [ "cerebro-project-git-main-yogita-sawants-projects-5192e91a.vercel.app"],
   methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"],
   credentials: true

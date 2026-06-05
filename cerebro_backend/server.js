@@ -12,7 +12,7 @@ const app = express();
 
 /* MIDDLEWARE */
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "https://cerebro-project-eggni8dej-yogita-sawants-projects-5192e91a.vercel.app",
+  origin: process.env.FRONTEND_URL || "cerebro-project-git-main-yogita-sawants-projects-5192e91a.vercel.app",
   credentials: true,
 }));
 

@@ -14,7 +14,7 @@ const signToken = (userId) =>
     expiresIn: "7d",
   });
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "https://cerebro-project-eggni8dej-yogita-sawants-projects-5192e91a.vercel.app";
+const FRONTEND_URL = process.env.FRONTEND_URL || "cerebro-project-git-main-yogita-sawants-projects-5192e91a.vercel.app";
 
 /* ─────────────────────────────────
    PASSPORT — Google Strategy
