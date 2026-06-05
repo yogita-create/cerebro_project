@@ -10,12 +10,6 @@ const app = express();
 /* LOAD GOOGLE AUTH */
 
 
-/* MIDDLEWARE */
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://cerebro-project-git-main-yogita-sawants-projects-5192e91a.vercel.app"
-];
-
 app.use(
   cors({
     origin: function (origin, callback) {
