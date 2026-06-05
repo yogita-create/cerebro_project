@@ -11,11 +11,23 @@ const app = express();
 
 
 /* MIDDLEWARE */
-app.use(cors({
-  origin: process.env.FRONTEND_URL || "https://cerebro-project-git-main-yogita-sawants-projects-5192e91a.vercel.app",
-  credentials: true,
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://cerebro-project-git-main-yogita-sawants-projects-5192e91a.vercel.app"
+];
 
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(passport.initialize());
 
