@@ -7,36 +7,39 @@ const { router: authRouter } = require("./user_authentication");
 
 const app = express();
 
-/* LOAD GOOGLE AUTH */
+/* ALLOWED ORIGINS */
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://cerebro-project-lxhhb532u-yogita-sawants-projects-5192e91a.vercel.app",
+];
 
-
+/* MIDDLEWARE */
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(express.json());
 app.use(passport.initialize());
 
 /* ROUTES */
 app.use("/api/auth", authRouter);
 app.use("/api/documents", require("./routes/documentRoutes"));
-app.use("/api/chat", require("./routes/chatRoutes")); // if exists
+app.use("/api/chat", require("./routes/chatRoutes"));
 
 /* TEST ROUTE */
 app.get("/", (req, res) => {
-  res.send("Backend Running ");
+  res.send("Backend Running");
 });
 
 /* DATABASE */
-mongoose.connect(process.env.MONGODB_URI)
+mongoose
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("MongoDB Connected");
 
