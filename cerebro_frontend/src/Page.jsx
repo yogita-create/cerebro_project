@@ -104,7 +104,7 @@ const Page = () => {
   const deleteDocument = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await fetch(`${API}/documents/${id}`, {
+      await fetch(`${API}/api/documents/${id}`, {
         method: "DELETE",
          headers: {
         Authorization: `Bearer ${token}`,
@@ -225,7 +225,7 @@ const deleteSession = async (id) => {
     formData.append("file", file);
 
     try {
-      const res = await fetch(`${API}/documents/upload`, {
+      const res = await fetch(`${API}/api/documents/upload`, {
         method: "POST",
          headers: {
         Authorization: `Bearer ${token}`,
