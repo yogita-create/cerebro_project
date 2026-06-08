@@ -61,7 +61,7 @@ const Page = () => {
 
     init();
     return () => clearTimeout(toastTimer.current);
-  }, );
+  },[]);
 
   /* ---------------- DOCUMENTS ---------------- */
 
