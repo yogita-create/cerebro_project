@@ -97,7 +97,8 @@ const Auth = ({ onAuthSuccess }) => {
       } else {
         showToast(data.message, "error");
       }
-    } catch {
+    } catch (error) {
+      console.error("Auth Error:", error);
       showToast("Network Error", "error");
     }
 
@@ -105,7 +106,7 @@ const Auth = ({ onAuthSuccess }) => {
   };
 
   const handleGoogle = () => {
-    window.open(`${API}/auth/google`, "_self");
+    window.open(`${API}/api/auth/google`, "_self");
   };
 
   return (

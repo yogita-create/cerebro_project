@@ -8,22 +8,7 @@ const { router: authRouter } = require("./user_authentication");
 const app = express();
 
 /* ALLOWED ORIGINS */
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "https://cerebro-project-lxhhb532u-yogita-sawants-projects-5192e91a.vercel.app",
-];
-
-/* MIDDLEWARE */
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
+app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 

@@ -18,7 +18,7 @@ const App = () => {
     }
 
     try {
-      const res = await fetch(`${API}/auth/me`, {
+      const res = await fetch(`${API}/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,7 @@ const App = () => {
   // LOGIN SUCCESS
   const handleAuthSuccess = async (token) => {
     try {
-      const res = await fetch(`${API}/auth/me`, {
+      const res = await fetch(`${API}/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
