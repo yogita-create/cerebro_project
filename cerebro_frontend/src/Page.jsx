@@ -69,7 +69,7 @@ const Page = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`${API}/documents`, {
+      const res = await fetch(`${API}/api/documents`, {
         headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -130,7 +130,7 @@ const Page = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`${API}/chat/sessions/${docId}`, 
+      const res = await fetch(`${API}/api/chat/sessions/${docId}`, 
         {
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -150,7 +150,7 @@ const Page = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`${API}/chat/session/${docId}/${sessId}`, {
+      const res = await fetch(`${API}/api/chat/session/${docId}/${sessId}`, {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
@@ -181,7 +181,7 @@ const deleteSession = async (id) => {
   try {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`${API}/chat/session/${id}`, {
+    const res = await fetch(`${API}/api/chat/session/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -258,7 +258,7 @@ const askQuestion = async (text, replaceIndex = null) => {
   try {
     const token = localStorage.getItem("token"); 
 
-    const res = await fetch(`${API}/chat`, {
+    const res = await fetch(`${API}/api/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
