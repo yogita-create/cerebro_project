@@ -1,278 +1,309 @@
 **Working URL** : https://cerebro-project.vercel.app/
-# 🧠 Cerebro – AI-Powered PDF Question Answering System
+<div align="center">
 
-Cerebro is a Retrieval-Augmented Generation (RAG) application that allows users to upload PDF documents and ask natural language questions about their content. The system retrieves the most relevant information from the uploaded document and generates context-aware answers using Large Language Models (LLMs).
+# 🧠 Cerebro
 
----
+### AI-Powered Retrieval-Augmented Generation (RAG) PDF Question Answering System
 
-## 🚀 Features
+Upload PDF documents and ask questions in natural language. Cerebro retrieves the most relevant information using semantic search and generates accurate answers using Large Language Models (LLMs).
 
-- 📄 Upload and process PDF documents
-- ✂️ Automatic text extraction and chunking
-- 🔍 Semantic search using vector embeddings
-- 🤖 AI-powered question answering
-- 💬 Interactive chat interface
-- 📝 Chat history management
-- 🎯 Multiple response modes
-  - Long Answer
-  - Medium Answer
-  - Short Answer
-  - Bullet Points
-- ⚡ Fast document retrieval using vector similarity search
+<p>
 
----
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![NodeJS](https://img.shields.io/badge/Node.js-Express-green?logo=node.js)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-success?logo=mongodb)
+![Groq](https://img.shields.io/badge/Groq-LLM-orange)
+![RAG](https://img.shields.io/badge/RAG-System-purple)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
-## 🛠️ Tech Stack
+</p>
 
-### Frontend
-- React.js
-- HTML5
-- CSS3
-- JavaScript (ES6+)
+🌐 **Live Demo**
 
-### Backend
-- Node.js
-- Express.js
+https://cerebro-project.vercel.app/
 
-### Database
-- MongoDB Atlas
+⭐ If you like this project, don't forget to star the repository.
 
-### AI & NLP
-- Groq API (Llama Model)
-- Hugging Face Transformers
-- BAAI/bge-small-en-v1.5 Embedding Model
-- Retrieval-Augmented Generation (RAG)
-
-### Tools
-- Git & GitHub
-- Postman
-- VS Code
+</div>
 
 ---
 
-## 🏗️ System Architecture
+# 🎥 Demo
 
-```text
-                PDF Upload
-                     │
-                     ▼
-            Text Extraction
-                     │
-                     ▼
-              Text Chunking
-                     │
-                     ▼
-        Generate Vector Embeddings
-                     │
-                     ▼
-            Store in MongoDB Atlas
-                     │
-                     ▼
-              User Question
-                     │
-                     ▼
-         Convert Question to Vector
-                     │
-                     ▼
-        Similarity Search (Vector Search)
-                     │
-                     ▼
-          Retrieve Relevant Chunks
-                     │
-                     ▼
-     Send Context + Question to Groq LLM
-                     │
-                     ▼
-            AI Generated Response
-```
-
----
-
-# 📂 Project Structure
+> Replace this image with your GIF later.
 
 ```
-Cerebro/
-│
-├── client/
-│   ├── src/
-│   ├── components/
-│   ├── pages/
-│   └── assets/
-│
-├── server/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   ├── services/
-│   ├── utils/
-│   └── config/
-│
-├── uploads/
-├── package.json
-└── README.md
+demo/demo.gif
 ```
 
----
+or
 
-# ⚙️ How It Works
-
-### Step 1
-Upload a PDF document.
-
-### Step 2
-The backend extracts all text from the PDF.
-
-### Step 3
-The extracted text is divided into smaller chunks.
-
-### Step 4
-Each chunk is converted into vector embeddings using the Hugging Face embedding model.
-
-### Step 5
-The embeddings are stored in MongoDB Atlas.
-
-### Step 6
-When the user asks a question, it is converted into an embedding.
-
-### Step 7
-The system performs semantic similarity search to retrieve the most relevant chunks.
-
-### Step 8
-The retrieved context and user question are sent to the Groq LLM.
-
-### Step 9
-The AI generates an accurate, context-aware answer.
-
----
-
-# 💡 Key Features
-
-- Retrieval-Augmented Generation (RAG)
-- Semantic Document Search
-- Context-Aware Responses
-- Multiple Answer Formats
-- PDF Processing
-- Embedding Generation
-- Vector Similarity Search
-- Modern Responsive UI
+```
+screenshots/chat.gif
+```
 
 ---
 
 # 📸 Screenshots
 
-> Add screenshots of the application here.
-
-Example:
-
 ```
 screenshots/
+│
 ├── Home.png
 ├── Upload.png
 ├── Chat.png
-└── Result.png
+├── Result.png
+└── History.png
 ```
 
 ---
 
-# 📦 Installation
+# ✨ Features
 
-## Clone the repository
+- 📄 Upload PDF documents
+- 📑 Automatic text extraction
+- ✂️ Intelligent text chunking
+- 🔍 Semantic similarity search
+- 🤖 AI-powered Question Answering
+- 💬 Interactive Chat Interface
+- 📝 Chat History
+- ⚡ Fast Response Generation
+- 🎯 Multiple Answer Modes
+  - Long
+  - Medium
+  - Short
+  - Bullet Points
+- 📱 Responsive UI
 
-```bash
-git clone https://github.com/your-username/Cerebro.git
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- React.js
+- Vite
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+
+---
+
+## Backend
+
+- Node.js
+- Express.js
+
+---
+
+## Database
+
+- MongoDB Atlas
+
+---
+
+## AI
+
+- Groq API
+- Llama Model
+- Hugging Face Transformers
+- BAAI/bge-small-en-v1.5
+- Retrieval-Augmented Generation (RAG)
+
+---
+
+## Tools
+
+- Git
+- GitHub
+- Postman
+- VS Code
+
+---
+
+# 🏗 Project Structure
+
+```
+cerebro_project/
+│
+├── cerebro_backend/
+│   │
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── app.js
+│   ├── server.js
+│   ├── package.json
+│   └── package-lock.json
+│
+├── cerebro_frontend/
+│   │
+│   ├── public/
+│   │   └── logo.png
+│   │
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── index.html
+│   ├── vite.config.js
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── eslint.config.js
+│   └── README.md
+│
+├── package.json
+├── package-lock.json
+├── .gitignore
+└── README.md
 ```
 
-## Navigate to the project
+---
 
-```bash
-cd Cerebro
+# ⚙️ Working Flow
+
+```
+               Upload PDF
+                    │
+                    ▼
+         Extract Text from PDF
+                    │
+                    ▼
+             Split into Chunks
+                    │
+                    ▼
+         Generate Vector Embeddings
+                    │
+                    ▼
+         Store in MongoDB Atlas
+                    │
+                    ▼
+            User asks Question
+                    │
+                    ▼
+      Convert Question into Vector
+                    │
+                    ▼
+      Perform Semantic Similarity Search
+                    │
+                    ▼
+      Retrieve Relevant Document Chunks
+                    │
+                    ▼
+      Send Context + Question to Groq LLM
+                    │
+                    ▼
+         Generate Context-Aware Answer
+                    │
+                    ▼
+           Display Answer to User
 ```
 
-## Install dependencies
+---
 
-### Frontend
+# 🚀 Installation
+
+Clone Repository
 
 ```bash
-cd client
+git clone https://github.com/yogita-create/cerebro_project.git
+```
+
+Backend
+
+```bash
+cd cerebro_backend
 npm install
+npm start
 ```
 
-### Backend
+Frontend
 
 ```bash
-cd server
+cd cerebro_frontend
 npm install
+npm run dev
 ```
 
 ---
 
 # 🔑 Environment Variables
 
-Create a `.env` file inside the server folder.
+Create `.env` inside **cerebro_backend**
 
 ```env
 PORT=5000
 
-MONGODB_URI=your_mongodb_connection_string
+MONGODB_URI=YOUR_MONGODB_CONNECTION
 
-GROQ_API_KEY=your_groq_api_key
+GROQ_API_KEY=YOUR_GROQ_API_KEY
 ```
 
 ---
 
-# ▶️ Run the Project
+# 🌐 Working URL
 
-### Backend
-
-```bash
-cd server
-npm start
-```
-
-### Frontend
-
-```bash
-cd client
-npm run dev
-```
+https://cerebro-project.vercel.app/
 
 ---
 
-# Future Improvements
+# 📚 Learning Outcomes
 
-- User Authentication
-- Multi-document Support
-- Conversation Memory
-- Citation-Based Responses
-- Streaming AI Responses
-- Document Management Dashboard
-- OCR Support for Scanned PDFs
-- Support for DOCX and TXT files
-
----
-
-# Learning Outcomes
-
-This project helped me gain practical experience in:
+This project helped me gain practical experience in
 
 - Retrieval-Augmented Generation (RAG)
 - React.js Development
 - REST API Development
 - MongoDB Atlas
-- Node.js & Express.js
-- PDF Processing
-- Vector Embeddings
+- PDF Parsing
 - Semantic Search
 - Prompt Engineering
 - Large Language Model Integration
+- Vector Embeddings
+- Full Stack Development
 
 ---
 
-# Author
+# 🚀 Future Improvements
+
+- User Authentication
+- Conversation Memory
+- Multiple PDF Support
+- OCR for Scanned PDFs
+- Streaming Responses
+- Document Management
+- Citation-based Answers
+- DOCX Support
+- Dark Mode
+- Admin Dashboard
+
+---
+
+# 👩‍💻 Author
 
 **Yogita Sawant**
 
 Web Developer | Frontend Developer
 
-Passionate about building AI-powered web applications using modern web technologies.
+📧 Email: your-email@example.com
+
+💼 LinkedIn: https://linkedin.com/in/your-profile
+
+🌐 Portfolio: Coming Soon
+
+---
+
+<div align="center">
+
+### ⭐ If you found this project useful, please give it a Star!
+
+Made with ❤️ using React, Node.js, MongoDB & AI
+
+</div>
