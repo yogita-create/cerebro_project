@@ -1,4 +1,3 @@
-**Working URL** : https://cerebro-project.vercel.app/
 <div align="center">
 
 # 🧠 Cerebro
@@ -25,36 +24,6 @@ https://cerebro-project.vercel.app/
 ⭐ If you like this project, don't forget to star the repository.
 
 </div>
-
----
-
-# 🎥 Demo
-
-> Replace this image with your GIF later.
-
-```
-demo/demo.gif
-```
-
-or
-
-```
-screenshots/chat.gif
-```
-
----
-
-# 📸 Screenshots
-
-```
-screenshots/
-│
-├── Home.png
-├── Upload.png
-├── Chat.png
-├── Result.png
-└── History.png
-```
 
 ---
 
@@ -292,11 +261,9 @@ This project helped me gain practical experience in
 
 Web Developer | Frontend Developer
 
-📧 Email: your-email@example.com
+📧 Email: yogitasawant2004@example.com
 
-💼 LinkedIn: https://linkedin.com/in/your-profile
-
-🌐 Portfolio: Coming Soon
+💼 LinkedIn: www.linkedin.com/in/yogita-sawant-webdev
 
 ---
 
