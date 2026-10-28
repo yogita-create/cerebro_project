@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧠 Cerebro
+# Cerebro
 
 ### AI-Powered Retrieval-Augmented Generation (RAG) PDF Question Answering System
 
@@ -54,7 +54,6 @@ https://cerebro-project.vercel.app/
 - Vite
 - HTML5
 - CSS3
-- JavaScript (ES6+)
 
 ---
 
@@ -173,7 +172,6 @@ cerebro_project/
                     │
                     ▼
            Display Answer to User
-```
 
 ---
 
@@ -199,7 +197,6 @@ Frontend
 cd cerebro_frontend
 npm install
 npm run dev
-```
 
 ---
 
