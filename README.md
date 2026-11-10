@@ -22,7 +22,6 @@ Upload PDF documents and ask questions in natural language. Cerebro retrieves th
 https://cerebro-project.vercel.app/
 
 ⭐ If you like this project, don't forget to star the repository.
-
 </div>
 
 ---
@@ -261,7 +260,6 @@ Web Developer | Frontend Developer
 📧 Email: yogitasawant2004@example.com
 
 💼 LinkedIn: www.linkedin.com/in/yogita-sawant-webdev
-
 ---
 
 <div align="center">
